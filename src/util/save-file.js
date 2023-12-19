@@ -32,6 +32,7 @@ export default function saveFile ({
     if (Array.isArray(data)) {
       const total = data.length
       data.forEach((item, index) => {
+        // CSV.
         if (format === 'csv') {
           // Add headers.
           if (headers?.length && index === 0) {
@@ -44,12 +45,22 @@ export default function saveFile ({
           writableStream.write(`${line}\n`)
         }
 
+        // JSON.
         if (format === 'json') {
-          if (index === total - 1) {
-            writableStream.write(`${JSON.stringify(item, null, 2)}`)
-          } else {
-            writableStream.write(`${JSON.stringify(item, null, 2)},\n`)
+          // Open array bracket.
+          if (index === 0) {
+            writableStream.write('[\n')
           }
+
+          // Add item.
+          if (index !== total - 1) {
+            writableStream.write(`${JSON.stringify(item, null, 2)},\n`)
+            return
+          }
+
+          // Last item.
+          // Close array brackets.
+          writableStream.write(`${JSON.stringify(item, null, 2)}\n]`)
         }
       })
     } else {
