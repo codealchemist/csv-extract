@@ -9,7 +9,7 @@
     "start": "clear; node src/index.js"
   },
   "author": "Alberto Miranda",
-  "repository": "git:codealchemist/csv-extract",
+  "repository": "github:codealchemist/csv-extract",
   "license": "ISC",
   "dependencies": {
     "args": "^5.0.3",
